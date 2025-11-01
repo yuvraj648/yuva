@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -13,7 +13,7 @@
   <packaging>pom</packaging>
 
   <name>Maven Project</name>
-  <description>Sample Maven project with a working, deployable site.</description>
+  <description>Sample multi-module Maven project (Java 17 compatible)</description>
   <url>http://www.example.com</url>
 
   <!-- ✅ Global project properties -->
@@ -22,6 +22,8 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     <java.version>17</java.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
   <!-- ✅ Declare all submodules -->
@@ -30,104 +32,83 @@
     <module>webapp</module>
   </modules>
 
-  <!-- ✅ Site distribution location -->
+  <!-- ✅ Site distribution -->
   <distributionManagement>
     <site>
       <id>site-server</id>
-      <name>Test Project Site</name>
+      <name>Project Site</name>
       <url>file:///tmp/maven-project-site</url>
     </site>
   </distributionManagement>
 
   <!-- ✅ Build configuration -->
   <build>
-    <plugins>
-      <!-- Compiler plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
-        <configuration>
-          <release>${maven.compiler.release}</release>
-        </configuration>
-      </plugin>
-
-      <!-- Release plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>3.0.1</version>
-        <configuration>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-        </configuration>
-      </plugin>
-
-      <!-- Site plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>4.0.0-M9</version>
-      </plugin>
-    </plugins>
-
-    <!-- ✅ Plugin version management for submodules -->
     <pluginManagement>
       <plugins>
-        <plugin>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.3.1</version>
-        </plugin>
 
+        <!-- Compiler plugin -->
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.11.0</version>
+          <configuration>
+            <release>${maven.compiler.release}</release>
+          </configuration>
         </plugin>
 
+        <!-- Maven Surefire for testing -->
         <plugin>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.7.0</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-jxr-plugin</artifactId>
-          <version>3.3.2</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.21.2</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.6.1</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>3.0.1</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>4.0.0-M9</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>3.2.5</version>
-        </plugin>
-
-        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.2.5</version>
         </plugin>
 
+        <!-- Maven Site plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>4.0.0-M9</version>
+        </plugin>
+
+        <!-- Maven Release -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>3.0.1</version>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+          </configuration>
+        </plugin>
+
+        <!-- Maven Checkstyle -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+
+        <!-- Maven PMD -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <version>3.21.2</version>
+        </plugin>
+
+        <!-- Maven Javadoc -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.7.0</version>
+        </plugin>
+
+        <!-- Jetty for web testing -->
+        <plugin>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>11.0.18</version>
+        </plugin>
+
+        <!-- Optional reporting helpers -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
@@ -140,16 +121,11 @@
           <version>3.0.0</version>
         </plugin>
 
-        <plugin>
-          <groupId>org.eclipse.jetty</groupId>
-          <artifactId>jetty-maven-plugin</artifactId>
-          <version>11.0.18</version>
-        </plugin>
       </plugins>
     </pluginManagement>
   </build>
 
-  <!-- ✅ Centralize dependency versions -->
+  <!-- ✅ Central dependency versions -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -187,48 +163,38 @@
     </dependencies>
   </dependencyManagement>
 
-  <!-- ✅ Reporting section (moved out of build) -->
+  <!-- ✅ Proper reporting section -->
   <reporting>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.3.1</version>
       </plugin>
       <plugin>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.3.2</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.7.0</version>
-      </plugin>
-      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
         <version>3.21.2</version>
       </plugin>
       <plugin>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>3.2.5</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.7.0</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
         <version>3.0.5</version>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
-        <version>3.0.0</version>
-      </plugin>
     </plugins>
   </reporting>
 
   <!-- ✅ SCM info -->
   <scm>
-    <connection>scm:git:git@github.com:jleetutorial/maven-project.git</connection>
-    <developerConnection>scm:git:git@github.com:jleetutorial/maven-project.git</developerConnection>
+    <connection>scm:git:https://github.com/yuvraj648/yuva.git</connection>
+    <developerConnection>scm:git:https://github.com/yuvraj648/yuva.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/jleetutorial/maven-project</url>
+    <url>https://github.com/yuvraj648/yuva</url>
   </scm>
 
   <!-- ✅ Require modern Maven -->
