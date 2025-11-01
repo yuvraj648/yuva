@@ -20,8 +20,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.release>17</maven.compiler.release>
     <java.version>17</java.version>
   </properties>
@@ -43,9 +41,8 @@
 
   <!-- ✅ Build configuration -->
   <build>
-    <!-- ✅ Apply key plugins globally -->
     <plugins>
-      <!-- Modern compiler plugin -->
+      <!-- Compiler plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -65,49 +62,15 @@
         </configuration>
       </plugin>
 
-      <!-- Site plugin with reporting plugins -->
+      <!-- Site plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <version>4.0.0-M9</version>
-        <configuration>
-          <reportPlugins>
-            <plugin>
-              <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>3.3.1</version>
-            </plugin>
-            <plugin>
-              <artifactId>maven-jxr-plugin</artifactId>
-              <version>3.3.2</version>
-            </plugin>
-            <plugin>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <version>3.7.0</version>
-            </plugin>
-            <plugin>
-              <artifactId>maven-pmd-plugin</artifactId>
-              <version>3.21.2</version>
-            </plugin>
-            <plugin>
-              <artifactId>maven-surefire-report-plugin</artifactId>
-              <version>3.2.5</version>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>findbugs-maven-plugin</artifactId>
-              <version>3.0.5</version>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>taglist-maven-plugin</artifactId>
-              <version>3.0.0</version>
-            </plugin>
-          </reportPlugins>
-        </configuration>
       </plugin>
     </plugins>
 
-    <!-- ✅ Define plugin versions for child modules -->
+    <!-- ✅ Plugin version management for submodules -->
     <pluginManagement>
       <plugins>
         <plugin>
@@ -223,6 +186,42 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <!-- ✅ Reporting section (moved out of build) -->
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.3.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>3.3.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.7.0</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.21.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.2.5</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>3.0.5</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <version>3.0.0</version>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <!-- ✅ SCM info -->
   <scm>
