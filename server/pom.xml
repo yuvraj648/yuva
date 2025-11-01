@@ -24,8 +24,21 @@
   </properties>
 
   <build>
-    <finalName>${project.artifactId}</finalName>
-  </build>
+  <finalName>${project.artifactId}</finalName>
+
+  <plugins>
+    <!-- ✅ Modern compiler plugin with Java 17 support -->
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.11.0</version>
+      <configuration>
+        <release>17</release>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+
 
   <!-- ✅ Use modern test libraries (versions inherited from parent) -->
   <dependencies>
