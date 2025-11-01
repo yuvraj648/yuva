@@ -1,30 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/maven-v4_0_0.xsd">
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
+  <!-- ✅ Parent project coordinates -->
   <groupId>com.example.maven-project</groupId>
   <artifactId>maven-project</artifactId>
-  <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
   <name>Maven Project</name>
   <description>Sample Maven project with a working, deployable site.</description>
   <url>http://www.example.com</url>
 
+  <!-- ✅ Global project properties -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.release>17</maven.compiler.release>
+    <java.version>17</java.version>
   </properties>
 
+  <!-- ✅ Declare all submodules -->
   <modules>
     <module>server</module>
     <module>webapp</module>
   </modules>
 
+  <!-- ✅ Site distribution location -->
   <distributionManagement>
     <site>
       <id>site-server</id>
@@ -33,20 +41,23 @@
     </site>
   </distributionManagement>
 
+  <!-- ✅ Build configuration -->
   <build>
+    <!-- ✅ Apply key plugins globally -->
     <plugins>
-      <!-- ✅ Updated compiler plugin -->
+      <!-- Modern compiler plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
         <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
+          <release>${maven.compiler.release}</release>
         </configuration>
       </plugin>
 
+      <!-- Release plugin -->
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>3.0.1</version>
         <configuration>
@@ -54,7 +65,9 @@
         </configuration>
       </plugin>
 
+      <!-- Site plugin with reporting plugins -->
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <version>4.0.0-M9</version>
         <configuration>
@@ -63,33 +76,27 @@
               <artifactId>maven-checkstyle-plugin</artifactId>
               <version>3.3.1</version>
             </plugin>
-
             <plugin>
               <artifactId>maven-jxr-plugin</artifactId>
               <version>3.3.2</version>
             </plugin>
-
             <plugin>
               <artifactId>maven-javadoc-plugin</artifactId>
               <version>3.7.0</version>
             </plugin>
-
             <plugin>
               <artifactId>maven-pmd-plugin</artifactId>
               <version>3.21.2</version>
             </plugin>
-
             <plugin>
               <artifactId>maven-surefire-report-plugin</artifactId>
               <version>3.2.5</version>
             </plugin>
-
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>findbugs-maven-plugin</artifactId>
               <version>3.0.5</version>
             </plugin>
-
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>taglist-maven-plugin</artifactId>
@@ -100,6 +107,7 @@
       </plugin>
     </plugins>
 
+    <!-- ✅ Define plugin versions for child modules -->
     <pluginManagement>
       <plugins>
         <plugin>
@@ -178,6 +186,7 @@
     </pluginManagement>
   </build>
 
+  <!-- ✅ Centralize dependency versions -->
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -215,13 +224,15 @@
     </dependencies>
   </dependencyManagement>
 
+  <!-- ✅ SCM info -->
   <scm>
     <connection>scm:git:git@github.com:jleetutorial/maven-project.git</connection>
     <developerConnection>scm:git:git@github.com:jleetutorial/maven-project.git</developerConnection>
     <tag>HEAD</tag>
-    <url>http://github.com/jleetutorial/maven-project</url>
+    <url>https://github.com/jleetutorial/maven-project</url>
   </scm>
 
+  <!-- ✅ Require modern Maven -->
   <prerequisites>
     <maven>3.9.0</maven>
   </prerequisites>
