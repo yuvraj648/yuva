@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- ✅ Inherit everything from parent -->
+  <!-- ✅ Inherit common configurations and properties from parent -->
   <parent>
     <groupId>com.example.maven-project</groupId>
     <artifactId>maven-project</artifactId>
@@ -16,18 +17,23 @@
   <artifactId>webapp</artifactId>
   <packaging>war</packaging>
   <name>Webapp</name>
-  <description>Web application module for Maven Project.</description>
-
-  <properties>
-    <!-- ✅ Match parent Java version -->
-    <maven.compiler.release>17</maven.compiler.release>
-  </properties>
+  <description>Web application module for Maven Project</description>
 
   <build>
     <finalName>${project.artifactId}</finalName>
 
     <plugins>
-      <!-- ✅ Use modern Jetty plugin -->
+      <!-- ✅ Java 17-compatible compiler -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+
+      <!-- ✅ Jetty plugin for local testing -->
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -40,11 +46,18 @@
           </webApp>
         </configuration>
       </plugin>
+
+      <!-- ✅ WAR packaging plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.2</version>
+      </plugin>
     </plugins>
   </build>
 
   <dependencies>
-    <!-- ✅ Use newer Jakarta Servlet & JSP APIs compatible with Jetty 11 -->
+    <!-- ✅ Jakarta EE 9+ APIs compatible with Jetty 11 -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
